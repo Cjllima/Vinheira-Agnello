@@ -15,3 +15,15 @@ while(true) {
         alert("Preencha todos os campos!");
     };
 };
+
+alert("Cadastro realizado! Veja os detalhes no console.");
+alert("A seguir, veja os detalhes do vinho no console.");
+
+console.log(`
+====== DADOS DO VINHOS ======
+    Nome do vinho: ${nomeVinho}
+    Tipo do vinho: ${tipo}
+    Sua safra: ${safra}
+    Quantidade em estoque: ${quantidade}
+=============================
+`);
