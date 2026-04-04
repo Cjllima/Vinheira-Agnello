@@ -45,7 +45,7 @@ if (validacao === "sim" || validacao === "1") {
 
         if (quantidade === null || !Number.isInteger(qtdd)) {
             alert("A quantidade do vinho é obrigatória");
-        } else if (qtdd <= 1000) {
+        } else if (qtdd <= 0) {
             alert("A quantidade não pode ser menor ou igual a zero");
         } else {
             break;
