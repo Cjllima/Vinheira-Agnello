@@ -56,10 +56,12 @@ if (validacao === "sim" || validacao === "1") {
 
     console.log(`
 ====== DADOS DOS VINHOS ======
+
 Nome do vinho: ${nomeVinho}
 Tipo do vinho: ${tipo}
 Safra: ${safra}
 Quantidade em estoque: ${quantidade}
+
 ==============================
 `);
 
