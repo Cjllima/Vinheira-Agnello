@@ -1,70 +1,118 @@
-let nomeVinho;
-let tipo;
-let safra;
-let quantidade;
-let validacao = prompt("Gostaria de cadastrar um vinho? \n1.Sim\n2.Não");
-validacao = validacao ? validacao.toLowerCase() : "";
+let contador = 0;
+let contaVinhosEstoqueBaixo = 0;
+let safraAntiga = 9999;
+let nomeAntigo = ""; 
 
-if (validacao === "sim" || validacao === "1") {
-    while (true) {
-        nomeVinho = prompt("Digite o nome do vinho");
-
-        if (nomeVinho === null || !nomeVinho.trim()) {
-            alert("O nome do vinho é obrigatório");
-        } else {
-            break;
-        };
-    };
+function validarCampo (mensagem) {
+    let valor;
 
     while (true) {
-        tipo = prompt("Digite o tipo do vinho");
+        valor = prompt(mensagem);
 
-        if (tipo === null || !tipo.trim()) {
-            alert("O tipo do vinho é obrigatório");
+        if (valor === null || !valor.trim()) {
+            alert("Campo Obrigatório");
         } else {
-            break;
+            return valor;
         };
     };
+};
+
+function validarAno (ano) {
+    let valor;
 
     while (true) {
-        safra = prompt("Digite o ano do vinho");
-        const ano = Number(safra);
+        valor = Number(prompt(ano));
 
-        if (safra === null || !Number.isInteger(ano)) {
-            alert("A safra do vinho é obrigatória");
-        } else if (ano < 1000) {
-            alert("O ano deve ter 4 dígitos");
+        if (!Number.isInteger(valor) || valor < 1000 || valor > 2026) {
+            alert("Ano invalido");
         } else {
-            break;
+            return valor;
         };
     };
+};
+
+function validarQuantidade (numero) {
+    let valor;
 
     while (true) {
-        quantidade = prompt("Digite a quantidade em estoque do vinho");
-        const qtdd = Number(quantidade);
+        valor = Number(prompt(numero));
 
-        if (quantidade === null || !Number.isInteger(qtdd)) {
-            alert("A quantidade do vinho é obrigatória");
-        } else if (qtdd <= 0) {
-            alert("A quantidade não pode ser menor ou igual a zero");
+        if (!Number.isInteger(valor) || valor <= 0) {
+            alert("Quantidade invalida");
         } else {
-            break;
+            return valor;
         };
     };
+};
+
+function verificarEstoque (quantidade) {
+    return quantidade < 5;
+};
+
+function classificarVinho (safra) {
+    let anoAtual = 2026;
+    let idade = anoAtual - safra;
+
+    if (idade <= 3) {
+        return "Jovem";
+    } else if (idade <= 7) {
+        return "Amadurecido";
+    } else {
+        return "Antigo";
+    };
+};
+
+while (true) {
+    let validacao = prompt("Gostaria de cadastrar um vinho? \n1.Sim\n2.Sair");
+    validacao = validacao ? validacao.toLowerCase() : "";
+
+    if (validacao === "sim" || validacao === "1") {
+        let nomeVinho = validarCampo("Digite o nome do Vinho");
+        let tipo = validarCampo("Digite o tipo do vinho");
+        let safra = validarAno("Digite o ano do vinho");
+        let quantidade = validarQuantidade("Digite a quantidade do vinho");
+        let classificacao = classificarVinho(safra);
+        let estoqueBaixo  = validarQuantidade(quantidade);
+
+        if (vereficarEstoque(quantidade)) {
+            alert("Estoque baixo");
+            contaVinhosEstoqueBaixo += 1;
+        };
+
+        if (safra < safraAntiga) {
+            safraAntiga = safra;
+            nomeAntigo = nomeVinho;
+        };
     
-    alert("Cadastro realizado! Veja os detalhes no console.");
+        alert("Cadastro realizado! acesse as informações no console");
+        contador += 1
 
     console.log(`
-====== DADOS DOS VINHOS ======
+    ====== DADOS DOS VINHOS ======
 
-Nome do vinho: ${nomeVinho}
-Tipo do vinho: ${tipo}
-Safra: ${safra}
-Quantidade em estoque: ${quantidade}
+    Nome do vinho: ${nomeVinho}
+    Tipo do vinho: ${tipo}
+    Safra: ${safra}
+    Quantidade em estoque: ${quantidade}
+    ${estoqueBaixo ? "Estoque desse vinho esta baixo" : ""}
+    Classificação: ${classificacao}
 
-==============================
-`);
+    ==============================
+    `);
 
-} else {
-    alert("Cadastro finalizado");
+    } else {
+        alert("Cadastro finalizado! acesse as informações no console");
+
+        console.log(`
+        ====== RESUMO FINAL ======
+
+        Cadastros feitos: ${contador}
+        Vinhos com estoque baixo: ${contaVinhosEstoqueBaixo}
+        Vinho com a safra mais antiga é: ${nomeAntigo} com ${safraAntiga}
+
+        ==============================
+        `);
+        
+        break
+    };
 };
